@@ -71,7 +71,7 @@ function renderPokemon(pokemonList) {
     return;
   }
 
-  pokemonGrid.innerHTML = pokemonList.map(pokemon => createPokemonCard(pokemon)).join('');
+  pokemonGrid.innerHTML = pokemonList.map((pokemon, index) => createPokemonCard(pokemon, index)).join('');
 
   // Add click listeners to cards
   document.querySelectorAll('.pokemon-card').forEach(card => {
@@ -84,7 +84,7 @@ function renderPokemon(pokemonList) {
 }
 
 // Create a Pokemon card HTML
-function createPokemonCard(pokemon) {
+function createPokemonCard(pokemon, index = 0) {
   const types = pokemon.types.map(t =>
     `<span class="type-badge type-${t.type.name}">${t.type.name}</span>`
   ).join('');
@@ -92,8 +92,12 @@ function createPokemonCard(pokemon) {
   const imageUrl = pokemon.sprites.other['official-artwork'].front_default ||
                    pokemon.sprites.front_default;
 
+  const primaryType = pokemon.types[0].type.name;
+  const animationDelay = (index % 20) * 0.05; // Staggered animation
+
   return `
-    <div class="pokemon-card" data-id="${pokemon.id}">
+    <div class="pokemon-card" data-id="${pokemon.id}" style="animation-delay: ${animationDelay}s">
+      <div class="card-bg card-type-${primaryType}"></div>
       <img src="${imageUrl}" alt="${pokemon.name}" loading="lazy">
       <p class="number">#${String(pokemon.id).padStart(3, '0')}</p>
       <p class="name">${pokemon.name}</p>
@@ -163,6 +167,8 @@ function openModal(pokemon) {
     `<span class="type-badge type-${t.type.name}">${t.type.name}</span>`
   ).join('');
 
+  const primaryType = pokemon.types[0].type.name;
+
   const stats = pokemon.stats.map(stat => {
     const percentage = Math.min((stat.base_stat / 255) * 100, 100);
     const color = getStatColor(stat.base_stat);
@@ -186,6 +192,7 @@ function openModal(pokemon) {
 
   modalBody.innerHTML = `
     <div class="modal-header">
+      <div class="header-bg card-type-${primaryType}"></div>
       <img src="${imageUrl}" alt="${pokemon.name}">
       <p class="number">#${String(pokemon.id).padStart(3, '0')}</p>
       <h2 class="name">${pokemon.name}</h2>
