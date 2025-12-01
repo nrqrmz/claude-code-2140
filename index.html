@@ -3,11 +3,38 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hello World</title>
+  <title>Pokedex - First 150 Pokemon</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Hello World</h1>
+  <div class="container">
+    <header>
+      <h1>Pokedex</h1>
+      <p class="subtitle">First 150 Pokemon</p>
+    </header>
+
+    <div class="controls">
+      <input type="text" id="search" placeholder="Search Pokemon..." autocomplete="off">
+      <select id="type-filter">
+        <option value="all">All Types</option>
+      </select>
+    </div>
+
+    <div id="loading" class="loading">
+      <div class="pokeball-spinner"></div>
+      <p>Loading Pokemon...</p>
+    </div>
+
+    <div id="pokemon-grid" class="pokemon-grid"></div>
+
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <button class="close-btn" id="close-modal">&times;</button>
+        <div id="modal-body"></div>
+      </div>
+    </div>
+  </div>
+
   <script src="main.js"></script>
 </body>
 </html>
